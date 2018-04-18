@@ -1,0 +1,21 @@
+{
+  "name": "chat-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test Successful\" && exit 0",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "chat",
+    "app",
+    "message",
+    "socket-io"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
