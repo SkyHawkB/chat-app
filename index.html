@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Socket.IO chat</title>
+  <title>SkyMessanger</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font: 13px Helvetica, Arial; }
@@ -21,7 +21,7 @@
       $('form').submit(() => {
         socket.emit('message', $('#input').val());
         $('#input').val('');
-        
+
         return false;
       });
       socket.on('message', (message) => {

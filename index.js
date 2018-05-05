@@ -2,7 +2,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fs = require('fs');
-fs.writeFileSync('./logs/events.log', 'Server started!');
+fs.writeFileSync('./logs/events.log', 'Server started! ');
 const log = (message) => {
   fs.appendFileSync('./logs/events.log', `${message}\n`);
 }
@@ -10,7 +10,7 @@ const log = (message) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-http.listen(3000, () => {
+http.listen(3000, '0.0.0.0', () => {
   log('Listening on *:3000!');
 });
 
