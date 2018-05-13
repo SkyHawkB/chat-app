@@ -11,7 +11,8 @@
     "chat",
     "app",
     "message",
-    "socket-io"
+    "socket.io",
+    "express"
   ],
   "author": "",
   "license": "MIT",
