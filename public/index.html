@@ -9,8 +9,8 @@
   <script>
     $(() => {
       const socket = io();
-      $('form').submit(() => {
-        if($('#input').val().replace(/\s+/, '') === '') return;
+      $('#message-form').submit(() => {
+        if($('#input').val().replace(/\s+/, '') === '') return false;
 
         socket.emit('message', $('#input').val());
         $('#input').val('');
@@ -25,8 +25,8 @@
 </head>
 <body>
   <ul id="messages"></ul>
-  <form action="">
-    <input id="input" autocomplete="off" /><button>Send</button>
+  <form id="message-form" action="">
+    <input id="message-input" autocomplete="off" /><button id="send">Send</button>
   </form>
 </body>
 </html>
