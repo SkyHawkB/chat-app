@@ -10,6 +10,8 @@
     $(() => {
       const socket = io();
       $('form').submit(() => {
+        if($('#input').val().replace(/\s+/, '') === '') return;
+
         socket.emit('message', $('#input').val());
         $('#input').val('');
 
