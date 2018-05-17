@@ -37,7 +37,7 @@
           console.log('else');
           nickname = nick;
 
-          socket.emit('join', nickname);
+          socket.emit('join', {id: socket.id, nick: nickname});
 
           $('#nickname-page-wrapper').hide();
           $('#message-page-wrapper').show();
@@ -47,7 +47,9 @@
       socket.on('userUpdate', (onlineUserList) => {
         document.getElementById('user-list').innerHTML = '';
 
-        onlineUserList.items.forEach((user) => {
+        console.log('in userUpdate');
+
+        Object.values(onlineUserList).forEach((user) => {
           $('#user-list').append($('<li class="centered">').text(user));
         });
       });

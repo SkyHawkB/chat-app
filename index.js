@@ -3,9 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fs = require('fs');
-const Collection = require('./Collection.js');
-
-const onlineUsers = new Collection();
+const onlineUsers = {};
 
 fs.writeFileSync('./logs/events.log', 'Server started! ');
 const log = (message) => {
@@ -18,15 +16,25 @@ http.listen(3000, '0.0.0.0', () => {
 });
 
 io.on('connection', (socket) => {
-  console.log(socket.id);
-
   socket.on('message', (message) => {
     log(`Message sent: "${message}"!`);
 
     io.emit('message', message);
   });
-  socket.on('join', (nickname) => {
-    onlineUsers.add(nickname);
+  socket.on('join', (user) => {
+    onlineUsers[user.id] = user.nick;
+
+    io.emit('userUpdate', onlineUsers);
+  });
+  socket.on('disconnect', () => {
+    let keys = Object.keys(onlineUsers);
+
+    for(let key in keys) {
+      if(!io.sockets.sockets.hasOwnProperty(key)) {
+        delete onlineUsers[keys[key]];
+        break;
+      }
+    }
 
     io.emit('userUpdate', onlineUsers);
   });
