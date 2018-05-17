@@ -5,9 +5,7 @@ const io = require('socket.io')(http);
 const onlineUsers = {};
 
 app.use(express.static(__dirname + '/public'));
-http.listen(3000, '0.0.0.0', () => {
-  log('Listening on *:3000!');
-});
+http.listen(3000, '0.0.0.0', () => {});
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
