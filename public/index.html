@@ -26,15 +26,12 @@
       });
 
       $('#connect').click(() => {
-        console.log('click');
         let nick = $('#nickname').val();
 
         if(/[^A-Za-z0-9 ]/g.test(nick) || nick.replace(/\s+/, '').length < 2 || nick.length > 20) {
           // TODO add an error message
-          console.log('if');
           return;
         } else {
-          console.log('else');
           nickname = nick;
 
           socket.emit('join', {id: socket.id, nick: nickname});
@@ -46,8 +43,6 @@
 
       socket.on('userUpdate', (onlineUserList) => {
         document.getElementById('user-list').innerHTML = '';
-
-        console.log('in userUpdate');
 
         Object.values(onlineUserList).forEach((user) => {
           $('#user-list').append($('<li class="centered">').text(user));
