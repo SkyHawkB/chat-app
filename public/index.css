@@ -33,6 +33,23 @@ html, body, #page-container {
   height: 100%;
   display: inline-block;
   position: fixed;
+  padding: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#user-header {
+  color: #33FF33;
+  margin-bottom: 20px;
+  font-size: 2em;
+  display: block;
+}
+#user-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+#user-list li {
+  color: #33FF33;
 }
 
 #nickname-page-wrapper {

@@ -45,11 +45,10 @@
       });
 
       socket.on('userUpdate', (onlineUserList) => {
-        document.getElementById('user-list').innerHTML = '&nbsp;';
-        console.log('fuckkkkk');
+        document.getElementById('user-list').innerHTML = '';
 
         onlineUserList.items.forEach((user) => {
-          $('#user-list').append($('<li>').text(user));
+          $('#user-list').append($('<li class="centered">').text(user));
         });
       });
     });
@@ -65,6 +64,7 @@
         </form>
       </div>
       <div id="sidebar">
+        <center><span id="user-header">Online Users</span></center>
         <ul id="user-list">&nbsp;</ul>
       </div>
     </div>
