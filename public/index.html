@@ -14,6 +14,8 @@
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
 
         socket.emit('message', `${nickname}: ${$('#message-input').val()}`);
+        // TODO object based messages
+        // socket.emit('message', {sender: nickname, content: $('#message-input').val()});
         $('#message-input').val('');
 
         return false;
@@ -44,10 +46,15 @@
 <body>
   <div id="page-container">
     <div id="message-page-wrapper">
-      <ul id="messages"></ul>
-      <form id="message-form" action="">
-        <input id="message-input" autocomplete="off" /><button id="send">Send</button>
-      </form>
+      <div id="message-view">
+        <ul id="messages"></ul>
+        <form id="message-form" action="">
+          <input id="message-input" autocomplete="off" /><button id="send">Send</button>
+        </form>
+      </div>
+      <div id="sidebar">
+        &nbsp;
+      </div>
     </div>
     <div id="nickname-page-wrapper">
       <div id="nickname-input-wrapper">

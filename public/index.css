@@ -10,6 +10,7 @@
 html, body, #page-container {
   width: 100%;
   height: 100%;
+  background-color: #030306;
 }
 
 #message-page-wrapper {
@@ -17,12 +18,27 @@ html, body, #page-container {
   height: 100%;
   display: none;
 }
+#message-view {
+  width: 80%;
+  height: calc(100% - 45px);
+  display: inline-block;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#sidebar {
+  background-color: #0A0C0A;
+  border: 2px solid #666666;
+  width: 20%;
+  height: 100%;
+  display: inline-block;
+  position: fixed;
+}
 
 #nickname-page-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: #030306;
 }
 #nickname-input-wrapper {
   width: 40%;
@@ -85,17 +101,20 @@ html, body, #page-container {
 }
 
 #message-form {
-  background: #000000;
+  background-color: #666666;
   padding: 3px 0px 3px 3px;
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  width: 80%;
 }
 #message-input {
   padding: 10px;
   width: calc(100% - 3px);
   margin-right: 3px;
+  color: #00FF00;
   height: 40px;
+  background-color: #303330;
+  border: none;
 }
 #send {
   width: 14.5%;
@@ -112,9 +131,7 @@ html, body, #page-container {
 }
 #messages li {
   padding: 5px 10px;
-}
-#messages li:nth-child(odd) {
-  background: #CCC;
+  color: #00FF00;
 }
 
 /* iPads */
@@ -136,4 +153,30 @@ html, body, #page-container {
   #size-modal-wrapper {
     display: flex;
   }
+}
+
+/* Hide sidebar on smaller screens. */
+@media only screen and (max-width: 960px) {
+  #sidebar {
+    display: none;
+  }
+  #message-view {
+    width: 100%;
+  }
+  #message-form {
+    width: 100%;
+  }
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background: #CCCCCC;
+}
+::-webkit-scrollbar-thumb {
+    background: #999999;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #666666;
 }
