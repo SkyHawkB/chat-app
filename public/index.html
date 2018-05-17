@@ -9,10 +9,11 @@
   <script>
     $(() => {
       const socket = io();
+      let nickname = "";
       $('#message-form').submit(() => {
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
 
-        socket.emit('message', $('#message-input').val());
+        socket.emit('message', `${nickname}: ${$('#message-input').val()}`);
         $('#message-input').val('');
 
         return false;
@@ -20,15 +21,43 @@
       socket.on('message', (message) => {
         $('#messages').append($('<li>').text(message));
       });
+
+      $('#connect').click(() => {
+        console.log('click');
+        let nick = $('#nickname').val();
+
+        if(/[^A-Za-z0-9 ]/g.test(nick) || nick.replace(/\s+/, '').length < 2 || nick.length > 20) {
+          // TODO add an error message
+          console.log('if');
+          return;
+        } else {
+          console.log('else');
+          nickname = nick;
+
+          $('#nickname-page-wrapper').hide();
+          $('#message-page-wrapper').show();
+        }
+      });
     });
   </script>
 </head>
 <body>
   <div id="page-container">
-    <ul id="messages"></ul>
-    <form id="message-form" action="">
-      <input id="message-input" autocomplete="off" /><button id="send">Send</button>
-    </form>
+    <div id="message-page-wrapper">
+      <ul id="messages"></ul>
+      <form id="message-form" action="">
+        <input id="message-input" autocomplete="off" /><button id="send">Send</button>
+      </form>
+    </div>
+    <div id="nickname-page-wrapper">
+      <div id="nickname-input-wrapper">
+        <div id="nickname-input">
+          <span id="nickname-title" class="centered">Enter a Nickname</span>
+          <input id="nickname" class="centered" autocomplete="off" />
+          <button id="connect" class="centered">Connect</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="size-modal-wrapper">
     <span id="size-modal">

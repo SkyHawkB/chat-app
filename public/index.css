@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
 * {
   margin: 0px;
   padding: 0px;
@@ -8,6 +10,63 @@
 html, body, #page-container {
   width: 100%;
   height: 100%;
+}
+
+#message-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+#nickname-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #030306;
+}
+#nickname-input-wrapper {
+  width: 40%;
+  height: 50%;
+  margin: auto;
+  border-radius: 70px;
+  background-color: #0A0C0A;
+  border: 2px solid #063006;
+  display: flex;
+  flex-direction: column;
+}
+#nickname-input {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-bottom: 5px;
+}
+#nickname-title {
+  font-family: "Ubuntu";
+  color: #00FF00;
+  font-size: 1.5em;
+}
+#nickname {
+  width: 50%;
+  height: 9%;
+  padding: 1%;
+  color: #FFFFFF;
+  border-radius: 15px;
+  background-color: #303330;
+  border: none;
+}
+#connect {
+  border: none;
+  background-color: #CCCCCC;
+  padding: 1%;
+  border-radius: 5px;
+  font-size: 1.2em;
+  font-family: "Ubuntu";
 }
 
 #size-modal-wrapper {
@@ -25,8 +84,8 @@ html, body, #page-container {
   border: 2px solid #09C;
 }
 
-form {
-  background: #000;
+#message-form {
+  background: #000000;
   padding: 3px 0px 3px 3px;
   position: fixed;
   bottom: 0px;
