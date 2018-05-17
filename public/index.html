@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>SkyMessenger</title>
-  <link rel="stylesheet" type="text/css" href="/index.css" />
+  <link rel="stylesheet" type="text/css" href="index.css" />
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -10,6 +10,7 @@
     $(() => {
       const socket = io();
       let nickname = "";
+
       $('#message-form').submit(() => {
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
 
@@ -36,9 +37,20 @@
           console.log('else');
           nickname = nick;
 
+          socket.emit('join', nickname);
+
           $('#nickname-page-wrapper').hide();
           $('#message-page-wrapper').show();
         }
+      });
+
+      socket.on('userUpdate', (onlineUserList) => {
+        document.getElementById('user-list').innerHTML = '&nbsp;';
+        console.log('fuckkkkk');
+
+        onlineUserList.items.forEach((user) => {
+          $('#user-list').append($('<li>').text(user));
+        });
       });
     });
   </script>
@@ -53,7 +65,7 @@
         </form>
       </div>
       <div id="sidebar">
-        &nbsp;
+        <ul id="user-list">&nbsp;</ul>
       </div>
     </div>
     <div id="nickname-page-wrapper">
