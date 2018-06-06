@@ -23,6 +23,9 @@ const sendDiscordMessage = (message) => {
     }
   }
 };
+const fs = require('fs');
+const moment = require('moment');
+const colors = require('colors');
 
 
 app.use(express.static(__dirname + '/public'));
@@ -81,5 +84,11 @@ client.on('message', (message) => {
       }
     }
   }
+});
+client.on("error", (error) => {
+  const timestamp = moment().format('YYYY-MM-DD HH:MM:SS');
+  fs.writeFileSync(`./logs/${timestamp}.log`);
+  console.log(colors.red(`The program encountered an error!`));
+  console.log(colors.yellow(`More information can be found at "./logs/${timestamp}.log" !`));
 });
 client.login(botConfig.token);
