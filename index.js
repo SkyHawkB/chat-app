@@ -31,9 +31,9 @@ const timestamp = () => {
 };
 const log = (message, file) => {
   if(fs.existsSync(`./logs/${file}.log`)) {
-    fs.appendFileSync(`./logs/${file}.log`, timestamp() + message + '\n');
+    fs.appendFileSync(`./logs/${file}.log`, '\n' + timestamp() + message);
   } else {
-    fs.writeFileSync(`./logs/${file}.log`, timestamp() + message + '\n');
+    fs.writeFileSync(`./logs/${file}.log`, timestamp() + message);
   }
 };
 
