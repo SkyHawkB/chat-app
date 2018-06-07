@@ -3,6 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const onlineUsers = {};
+const messages = [];
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -45,6 +46,8 @@ io.on('connection', (socket) => {
   socket.on('message', (message) => {
     io.emit('message', message);
 
+    messages.push(message);
+
     log('Message sent!', 'events');
     log(message, 'messages');
 
@@ -56,6 +59,7 @@ io.on('connection', (socket) => {
     log(`"${user.nick}" joined the chat!`, 'events');
 
     io.emit('userUpdate', onlineUsers);
+    io.emit('messageUpdate', messages);
   });
   socket.on('disconnect', () => {
     let keys = Object.keys(onlineUsers);
@@ -105,7 +109,7 @@ client.on('message', (message) => {
 });
 client.on("error", (error) => {
   const timestamp = moment().format('YYYY-MM-DD HH-MM-SS');
-  fs.writeFileSync(`./logs/error/${timestamp}.log`);
+  fs.writeFileSync(`./logs/error/${timestamp}.log`, error);
   console.log(colors.red(`The program encountered an error!`));
   console.log(colors.yellow(`More information can be found at "./logs/error/${timestamp}.log" !`));
 });

@@ -10,6 +10,7 @@
     $(() => {
       const socket = io();
       let nickname = "";
+      let loadedMessages = false;
 
       $('#message-form').submit(() => {
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
@@ -47,6 +48,14 @@
         Object.values(onlineUserList).forEach((user) => {
           $('#user-list').append($('<li class="centered">').text(user));
         });
+      });
+
+      socket.on('messageUpdate', (messageList) => {
+        if(loadedMessages) return;
+
+        for(let i in messageList) {
+          $('#messages').append($('<li>').text(messageList[i]));
+        }
       });
     });
   </script>
