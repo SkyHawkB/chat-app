@@ -77,7 +77,7 @@ io.on('connection', (socket) => {
   });
 });
 
-client.on('ready', () => {
+client.once('ready', () => {
   console.log(colors.green('Discord Integration Active!'));
 });
 client.on('message', (message) => {
@@ -108,9 +108,6 @@ client.on('message', (message) => {
   }
 });
 client.on("error", (error) => {
-  const timestamp = moment().format('YYYY-MM-DD HH-MM-SS');
-  fs.writeFileSync(`./logs/error/${timestamp}.log`, error);
-  console.log(colors.red(`The program encountered an error!`));
-  console.log(colors.yellow(`More information can be found at "./logs/error/${timestamp}.log" !`));
+  fs.writeFileSync(`./logs/error/${moment().format('YYYY-MM-DD HH-MM-SS')}.log`, error.toString());
 });
 client.login(botConfig.token);
