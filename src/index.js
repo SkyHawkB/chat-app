@@ -2,8 +2,20 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const fs = require('fs');
 const onlineUsers = {};
 const messages = [];
+const backup = require('./messages.json').messages;
+for(let i in backup) {
+  messages.push(backup[i]);
+}
+const backupMessages = () => {
+  const backupObj = {
+    "messages": messages
+  };
+
+  fs.writeFileSync('./messages.json', JSON.stringify(backupObj, null, '  '));
+};
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -24,7 +36,6 @@ const sendDiscordMessage = (message) => {
     }
   }
 };
-const fs = require('fs');
 const moment = require('moment');
 const colors = require('colors');
 const timestamp = () => {
@@ -47,11 +58,12 @@ io.on('connection', (socket) => {
     io.emit('message', message);
 
     messages.push(message);
+    backupMessages();
 
     log('Message sent!', 'events');
     log(message, 'messages');
 
-    sendDiscordMessage(message);
+    sendDiscordMessage(`${message.sender}: ${message.content}`);
   });
   socket.on('join', (user) => {
     onlineUsers[user.id] = user.nick;
@@ -107,7 +119,7 @@ client.on('message', (message) => {
     }
   }
 });
-client.on("error", (error) => {
-  fs.writeFileSync(`./logs/error/${moment().format('YYYY-MM-DD HH-MM-SS')}.log`, error.toString());
+client.on('error', (error) => {
+  fs.writeFileSync(`./logs/error/${moment().format('YYYY-MM-DD HH-MM-SS')}.log`, JSON.stringify(error, null, '  '));
 });
 client.login(botConfig.token);

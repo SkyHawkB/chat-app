@@ -9,21 +9,40 @@
   <script>
     $(() => {
       const socket = io();
+      function hasLink(string) {
+        return /https?:\/\/\S+/g.test(string);
+      }
+      function parseMessage(message) {
+        let newContent = message.content.replace('<', '&lt;').replace('>', '&gt;');
+
+        if(hasLink(newContent)) {
+          console.log(`"${newContent}" has a link`);
+        }
+
+        return `${message.sender}: ${newContent}`;
+      }
       let nickname = "";
       let loadedMessages = false;
 
       $('#message-form').submit(() => {
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
 
-        socket.emit('message', `${nickname}: ${$('#message-input').val()}`);
-        // TODO object based messages
-        // socket.emit('message', {sender: nickname, content: $('#message-input').val()});
+        socket.emit('message', {sender: nickname, content: $('#message-input').val()});
         $('#message-input').val('');
 
         return false;
       });
+      
       socket.on('message', (message) => {
-        $('#messages').append($('<li>').text(message));
+        $('#messages').append($('<li>').text(parseMessage(message)));
+      });
+
+      socket.on('messageUpdate', (messageList) => {
+        if(loadedMessages) return;
+
+        for(let i in messageList) {
+          $('#messages').append($('<li>').text(parseMessage(messageList[i])));
+        }
       });
 
       $('#connect').click(() => {
@@ -48,14 +67,6 @@
         Object.values(onlineUserList).forEach((user) => {
           $('#user-list').append($('<li class="centered">').text(user));
         });
-      });
-
-      socket.on('messageUpdate', (messageList) => {
-        if(loadedMessages) return;
-
-        for(let i in messageList) {
-          $('#messages').append($('<li>').text(messageList[i]));
-        }
       });
     });
   </script>
