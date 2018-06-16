@@ -9,39 +9,17 @@
   <script>
     $(() => {
       const socket = io();
-      function hasLink(string) {
-        return /https?:\/\/\S+/g.test(string);
-      }
+
       function parseMessage(message) {
         let newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        if(hasLink(newContent)) {
-          const linkRegex = /https?:\/\/\S+/g;
-          const links = []; let link;
-          const indices = [];
-          while((link = linkRegex.exec(newContent)) != null) {
-            links.push(link);
-            indices.push(link.index);
-          }
-
-          let _newContent = '';
-          for(let index in newContent) {
-            // console.log(`index : ${index}`);
-            // console.log(`indices: ${indices}`);
-            // console.log(`indices.includes(index): ${indices.includes(index)}`);
-            if(indices.includes(index)) {
-              let toAdd = `<a href="${33}>${33}</a>"`;
-              _newContent += toAdd;
-              index += toAdd.length;
-            } else {
-              _newContent += newContent[index];
-            }
-          }
-          newContent = _newContent;
+        if(/https?:\/\/\S+/g.test(newContent)) {
+          return newContent.replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
+        } else {
+          return `${message.sender}: ${newContent}`;
         }
-
-        return `${message.sender}: ${newContent}`;
       }
+
       let nickname = "";
       let loadedMessages = false;
 
