@@ -60,8 +60,10 @@ io.on('connection', (socket) => {
     messages.push(message);
     backupMessages();
 
+    console.log(message.content);
+
     log('Message sent!', 'events');
-    log(message, 'messages');
+    log(JSON.stringify(message, null, '  '), 'messages');
 
     sendDiscordMessage(`${message.sender}: ${message.content}`);
   });

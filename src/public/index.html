@@ -13,10 +13,31 @@
         return /https?:\/\/\S+/g.test(string);
       }
       function parseMessage(message) {
-        let newContent = message.content.replace('<', '&lt;').replace('>', '&gt;');
+        let newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
         if(hasLink(newContent)) {
-          console.log(`"${newContent}" has a link`);
+          const linkRegex = /https?:\/\/\S+/g;
+          const links = []; let link;
+          const indices = [];
+          while((link = linkRegex.exec(newContent)) != null) {
+            links.push(link);
+            indices.push(link.index);
+          }
+
+          let _newContent = '';
+          for(let index in newContent) {
+            // console.log(`index : ${index}`);
+            // console.log(`indices: ${indices}`);
+            // console.log(`indices.includes(index): ${indices.includes(index)}`);
+            if(indices.includes(index)) {
+              let toAdd = `<a href="${33}>${33}</a>"`;
+              _newContent += toAdd;
+              index += toAdd.length;
+            } else {
+              _newContent += newContent[index];
+            }
+          }
+          newContent = _newContent;
         }
 
         return `${message.sender}: ${newContent}`;
@@ -32,16 +53,16 @@
 
         return false;
       });
-      
+
       socket.on('message', (message) => {
-        $('#messages').append($('<li>').text(parseMessage(message)));
+        $('#messages').append($('<li>').html(parseMessage(message)));
       });
 
       socket.on('messageUpdate', (messageList) => {
         if(loadedMessages) return;
 
         for(let i in messageList) {
-          $('#messages').append($('<li>').text(parseMessage(messageList[i])));
+          $('#messages').append($('<li>').html(parseMessage(messageList[i])));
         }
       });
 
