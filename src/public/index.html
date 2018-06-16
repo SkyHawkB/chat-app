@@ -11,13 +11,8 @@
       const socket = io();
 
       function parseMessage(message) {
-        let newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-        if(/https?:\/\/\S+/g.test(newContent)) {
-          return newContent.replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
-        } else {
-          return `${message.sender}: ${newContent}`;
-        }
+        const newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
+        return `${message.sender}: ${newContent}`;
       }
 
       let nickname = "";
