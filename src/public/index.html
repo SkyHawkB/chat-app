@@ -11,7 +11,7 @@
       const socket = io();
 
       function parseMessage(message) {
-        const newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
+        const newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
         return `${message.sender}: ${newContent}`;
       }
 
