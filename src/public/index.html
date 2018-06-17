@@ -12,7 +12,7 @@
 
       function parseMessage(message) {
         const newContent = message.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/(https?:\/\/\S+)/g, `<a href="$1">$1</a>`);
-        return `${message.sender}: ${newContent}`;
+        return `<span>${message.sender}: ${newContent}</span><span style="float: right;">${message.timestamp}</span>`;
       }
 
       let nickname = "";
@@ -21,7 +21,7 @@
       $('#message-form').submit(() => {
         if($('#message-input').val().replace(/\s+/, '') === '') return false;
 
-        socket.emit('message', {sender: nickname, content: $('#message-input').val()});
+        socket.emit('message', {sender: nickname, content: $('#message-input').val(), timestamp: null});
         $('#message-input').val('');
 
         return false;

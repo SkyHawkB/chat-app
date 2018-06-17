@@ -55,15 +55,15 @@ http.listen(3000, '0.0.0.0', () => {
 });
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
+    message.timestamp = moment().format('MM/DD hh:mm');
+
     io.emit('message', message);
 
     messages.push(message);
     backupMessages();
 
-    console.log(message.content);
-
     log('Message sent!', 'events');
-    log(JSON.stringify(message, null, '  '), 'messages');
+    log(`${message.sender}: ${message.content}`, 'messages');
 
     sendDiscordMessage(`${message.sender}: ${message.content}`);
   });
