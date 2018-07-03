@@ -1,4 +1,4 @@
 node_modules
 #botConfig.json
 #messages.json
-*.log
+#*.log
