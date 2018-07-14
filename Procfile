@@ -1,1 +1,0 @@
-web: cd src && node index.js

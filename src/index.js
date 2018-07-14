@@ -20,7 +20,10 @@ const backupMessages = () => {
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const botConfig = require('./botConfig.json');
+const botConfig = {
+  token: process.env.BOT_TOKEN,
+  channel: process.env.BOT_CHANNEL
+};
 const sendDiscordMessage = (message) => {
   const keys = client.guilds.keyArray();
 
