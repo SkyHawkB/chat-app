@@ -10,6 +10,11 @@ accepts@~1.3.4:
     mime-types "~2.1.18"
     negotiator "0.6.1"
 
+aes.js-wrapper@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/aes.js-wrapper/-/aes.js-wrapper-1.0.0.tgz#80272ed0b2d9e43f21ea12c499951f681f0ed81e"
+  integrity sha512-2xh5h6OSLghQ2Pck82nOxnM4+SRnuG3R0CtmhvJNK4LetDt2vNhQz4yWyGhSMLdEquqQnbcl0AlF85UWbMnKUg==
+
 after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
